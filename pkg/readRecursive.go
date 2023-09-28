@@ -2,55 +2,47 @@ package Myls
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 )
 
-func ReadRecursive(dir string, flags Flags) error {
-	if !flags.R {
-		filesAndFolders, err := Read(dir, flags)
-		if err != nil {
-			return err
-		}
-		filesAndFolders = sortFilesAndFolders(filesAndFolders, flags)
-		for _, file := range filesAndFolders {
-			printFileOrDir(file, file.Info.IsDir(), flags)
+func ReadRecursive(rootDir string, flags Flags) error {
+	// Helper function to print entries in a directory
+	printEntries := func(dir string, entries []File) {
+		for _, entry := range entries {
+			printFileOrDir(entry, entry.Info.IsDir(), flags)
 		}
 		fmt.Println()
+		fmt.Println()
+	}
+
+	// Recursive function to process directories
+	var processDir func(dir string) error
+	processDir = func(dir string) error {
+		entries, err := Read(dir, flags)
+		if err != nil {
+			Fail = append(Fail, dir)
+			return err
+		}
+
+		// Print the directory name
+		fmt.Println(dir + ":")
+
+		// Print the directory entries
+		entries = sortFilesAndFolders(entries, flags)
+		printEntries(dir, entries)
+
+		// Find subdirectories and process them recursively
+		for _, entry := range entries {
+			if entry.Info.IsDir() {
+				subDir := filepath.Join(dir, entry.Info.Name())
+				if err := processDir(subDir); err != nil {
+					return err
+				}
+			}
+		}
+
 		return nil
 	}
 
-	return filepath.WalkDir(dir, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			fmt.Println("Error at path:", path, "-", err) // Debug print
-			return err
-		}
-
-		// Skipping if it's a hidden file/directory and -a is not enabled, except for the root directory
-		isHidden := entry.Name()[0] == '.'
-		if !isRoot && isHidden && !flags.A {
-			if entry.IsDir() {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-
-		isRoot = false // Reset the flag after processing the root directory
-
-		// Print directory contents if it's a directory
-		if entry.IsDir() {
-			fmt.Println(path + ":" + Reset)
-			filesAndFolders, err := Read(path, flags)
-			if err != nil {
-				return err
-			}
-			filesAndFolders = sortFilesAndFolders(filesAndFolders, flags)
-			for _, file := range filesAndFolders {
-				printFileOrDir(file, file.Info.IsDir(), flags)
-			}
-			fmt.Println()
-			fmt.Println()
-		}
-		return nil
-	})
+	return processDir(rootDir)
 }

@@ -5,10 +5,13 @@ import (
 	"strings"
 )
 
-func Parse() Flags {
+// struct that holds the flags that are set
+func Parse() (Flags, []string) {
 	var flags Flags
 
 	args := os.Args[1:]
+	var nonFlagArgs []string // To store non-flag arguments
+
 	for _, arg := range args {
 		if strings.HasPrefix(arg, "-") {
 			flagsSet := strings.TrimPrefix(arg, "-")
@@ -26,8 +29,10 @@ func Parse() Flags {
 					flags.T = true
 				}
 			}
+		} else {
+			nonFlagArgs = append(nonFlagArgs, arg) // Store non-flag arguments
 		}
 	}
 
-	return flags
+	return flags, nonFlagArgs
 }

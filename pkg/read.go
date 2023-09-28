@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
