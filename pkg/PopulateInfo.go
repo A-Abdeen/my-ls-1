@@ -3,6 +3,7 @@ package Myls
 import (
 	"errors"
 	"fmt"
+	"os/user"
 	"syscall"
 )
 
@@ -20,10 +21,23 @@ func (f *File) PopulateInfo() error {
 	}
 	// Populate the File struct
 	f.Permissions = info.Mode()
+
 	f.Links = uint64(stat.Nlink)
-	f.Owner = fmt.Sprintf("%d", stat.Uid) // We will format Uid to a string representation; consider looking up the username
-	f.Group = fmt.Sprintf("%d", stat.Gid) // Same as above for Gid
+
+	owner, err := user.LookupId(fmt.Sprintf("%d", stat.Uid))
+	if err != nil {
+		return err
+	}
+	f.Owner = owner.Username
+
+	Group, err := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
+	if err != nil {
+		return err
+	}
+	f.Group = Group.Name
+
 	f.Size = info.Size()
+
 	f.ModTime = info.ModTime()
 
 	return nil

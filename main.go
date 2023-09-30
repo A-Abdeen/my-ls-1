@@ -23,6 +23,7 @@ func main() {
 			Myls.ReadRecursive(arg, flags)
 		}
 	}
+	// Myls.Success = Myls.TrimEmptyStrings(Myls.Success)
 	for _, fail := range Myls.Fail {
 		fmt.Println("myls: cannot access '" + fail + "': No such file or directory")
 	}

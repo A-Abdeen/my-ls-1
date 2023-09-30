@@ -1,0 +1,25 @@
+package Myls
+
+func TrimEmptyStrings(strings []string) []string {
+	if len(strings) == 0 {
+		return strings
+	}
+
+	start := 0
+	end := len(strings) - 1
+
+	// Remove empty strings from the beginning of the slice
+	for start < len(strings) && (strings[start] == "" || strings[start] == "\\n" || strings[start] == "\n") {
+		start++
+	}
+
+	// Remove empty strings from the end of the slice
+	for end >= 0 {
+		if !(strings[end] == "" || strings[end] == "\\n" || strings[end] == "\n") {
+			break
+		}
+		end--
+	}
+
+	return strings[start : end+1]
+}
