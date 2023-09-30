@@ -23,7 +23,10 @@ type Flags struct {
 	T  bool
 }
 
-var isRoot = true
+var (
+	Fail    []string
+	Success []string
+)
 
 const (
 	Blue  = "\033[1;34m" // bold and blue

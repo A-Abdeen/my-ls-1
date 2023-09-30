@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
@@ -20,7 +21,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 		file := File{Info: entry}
 		err := file.PopulateInfo()
 		if err != nil {
-			fmt.Println("Error:", err) // Adjust as needed
+			fmt.Println("Error:", err)
 			continue
 		}
 
