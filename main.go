@@ -27,6 +27,9 @@ func main() {
 	for _, fail := range Myls.Fail {
 		fmt.Println("myls: cannot access '" + fail + "': No such file or directory")
 	}
+	if flags.L {
+		fmt.Println("total ", Myls.TotalBlocks/2)
+	}
 	for _, success := range Myls.Success {
 		fmt.Print(success)
 	}

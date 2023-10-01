@@ -18,4 +18,7 @@ func NonRecursive(dir string, flags Flags) {
 		printFileOrDir(file, file.Info.IsDir(), flags)
 	}
 	// fmt.Println()
+	for _, file := range filesAndFolders {
+		TotalBlocks += file.blockSize
+	}
 }

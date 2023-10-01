@@ -22,6 +22,9 @@ func (f *File) PopulateInfo() error {
 	// Populate the File struct
 	f.Permissions = info.Mode()
 
+	// Add the number of blocks
+	f.blockSize = stat.Blocks
+
 	f.Links = uint64(stat.Nlink)
 
 	owner, err := user.LookupId(fmt.Sprintf("%d", stat.Uid))
