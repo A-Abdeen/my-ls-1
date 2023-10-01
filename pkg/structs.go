@@ -31,6 +31,12 @@ var (
 )
 
 const (
-	Blue  = "\033[1;34m" // bold and blue
-	Reset = "\033[0m"
+	Blue    = "\033[1;34m"
+	Green   = "\033[0;32m"
+	Cyan    = "\033[0;36m"
+	Yellow  = "\033[30;43m" // black foreground, yellow background
+	Magenta = "\033[0;35m"
+	Red     = "\033[0;31m"
+	BRed    = "\033[30;41m" // black foreground, red background
+	Reset   = "\033[0m"
 )

@@ -1,20 +1,69 @@
 package Myls
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 // Prints the file or directory
 func printFileOrDir(file File, isDir bool, flags Flags) {
-	if isDir { // print directory in blue color and bold
-		if flags.L {
-			Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+" "+string(file.Group)+" "+fmt.Sprint(file.Size)+" "+string(file.ModTime.Format("Jan 2 15:04"))+" "+Blue+file.Info.Name()+Reset+"\n")
-		} else {
-			Success = append(Success, Blue+file.Info.Name()+"  "+Reset)
+	color := Reset // Default color
+
+	if isDir { // Directory
+		color = Blue
+	} else { // File
+
+		if isBrokenLink(file) {
+			color = BRed
 		}
-	} else { // print file in default color
-		if flags.L {
-			Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+" "+string(file.Group)+" "+fmt.Sprint(file.Size)+" "+string(file.ModTime.Format("Jan 2 15:04"))+" "+file.Info.Name()+"\n")
-		} else {
-			Success = append(Success, file.Info.Name()+"  ")
+
+		if file.Info.Type()&os.ModeSymlink != 0 { // Valid symbolic link
+			color = Cyan
 		}
+
+		fileType := file.Info.Type()
+
+		if fileType.IsRegular() {
+			if (file.Permissions & 0o111) != 0 { // Executable
+				color = Green
+			} else {
+				color = Reset // Default color for files
+			}
+		}
+
+		// Placeholder for Graphic image file
+		if strings.HasSuffix((file.Info.Name()), ".png") || strings.HasSuffix((file.Info.Name()), ".jpg") || strings.HasSuffix((file.Info.Name()), ".jpeg") || strings.HasSuffix((file.Info.Name()), ".gif") {
+			color = Magenta
+		}
+
+		if strings.HasSuffix((file.Info.Name()), ".zip") || strings.HasSuffix((file.Info.Name()), ".tar") || strings.HasSuffix((file.Info.Name()), ".gz") || strings.HasSuffix((file.Info.Name()), ".xz") || strings.HasSuffix((file.Info.Name()), ".bz2") || strings.HasSuffix((file.Info.Name()), ".zst") || strings.HasSuffix((file.Info.Name()), ".7z") || strings.HasSuffix((file.Info.Name()), ".rar") || strings.HasSuffix((file.Info.Name()), ".tar.gz") || strings.HasSuffix((file.Info.Name()), ".tar.xz") || strings.HasSuffix((file.Info.Name()), ".tar.bz2") || strings.HasSuffix((file.Info.Name()), ".tar.zst") || strings.HasSuffix((file.Info.Name()), ".tar.7z") {
+			color = Red
+		}
+
 	}
+
+	// print directory in blue color and bold
+	if flags.L {
+		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+" "+string(file.Group)+" "+fmt.Sprint(file.Size)+" "+string(file.ModTime.Format("Jan 2 15:04"))+" "+color+file.Info.Name()+Reset+"\n")
+	} else {
+		Success = append(Success, color+file.Info.Name()+"  "+Reset)
+	}
+}
+
+// isBrokenLink checks if a symbolic link is broken (i.e., its target does not exist).
+func isBrokenLink(file File) bool {
+	// If it's not a symlink, it can't be a broken link
+	if file.Info.Type()&os.ModeSymlink == 0 {
+		return false
+	}
+
+	target, err := os.Readlink(file.Info.Name())
+	if err != nil {
+		// If there's an error reading the link, it's likely a broken link
+		return true
+	}
+
+	_, err = os.Stat(target)
+	return os.IsNotExist(err)
 }
