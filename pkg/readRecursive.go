@@ -32,10 +32,13 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		// Print the directory entries
 		entries = sortFilesAndFolders(entries, flags)
 		var blocks int64
-		for _, file := range entries {
-			blocks += file.blockSize
+		if flags.L {
+			for _, file := range entries {
+				blocks += file.blockSize
+			}
+			Success = append(Success, "total "+fmt.Sprint(blocks/2)+"\n")
 		}
-		Success = append(Success, "total "+fmt.Sprint(blocks/2)+"\n")
+
 		printEntries(dir, entries)
 
 		// Find subdirectories and process them recursively
