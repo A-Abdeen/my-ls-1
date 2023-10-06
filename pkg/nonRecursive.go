@@ -1,9 +1,11 @@
 package Myls
 
+import "fmt"
 func NonRecursive(dir string, flags Flags) {
 	// Read the directory
 	filesAndFolders, err := Read(dir, flags)
 	if err != nil {
+		fmt.Println(err)
 		Fail = append(Fail, dir)
 		return
 	}

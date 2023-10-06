@@ -9,11 +9,18 @@ import (
 func Read(dir string, flag Flags) ([]File, error) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
+		if dir != "" {
+			entries, _ = os.ReadDir(".")
+		}else {
 		return nil, err
 	}
+}
 
 	var filesAndFolders []File
 	for _, entry := range entries {
+		if dir != entry.Name() {
+			continue
+		}
 		if !flag.A && entry.Name()[0] == '.' {
 			continue
 		}
@@ -24,9 +31,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 			fmt.Println("Error:", err)
 			continue
 		}
-
 		filesAndFolders = append(filesAndFolders, file)
 	}
-
 	return filesAndFolders, nil
 }

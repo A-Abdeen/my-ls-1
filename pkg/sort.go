@@ -4,7 +4,7 @@ import (
 	"sort"
 )
 
-// Sorts the files and folders by alphabteical order
+// Sorts the files and folders by alphabetical order
 func sortFilesAndFolders(filesAndFolders []File, flags Flags) []File {
 	sort.SliceStable(filesAndFolders, func(i, j int) bool {
 		if flags.Rr {
