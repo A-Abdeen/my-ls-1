@@ -32,9 +32,9 @@ func ReadRecursive(rootDir string, flags Flags) error {
 
 		// Print the directory entries
 		entries = sortFilesAndFolders(entries, flags)
-		// if flags.T {
-		// 	sortByModification(entries, flags)
-		// }
+		if flags.T {
+			entries = sortByModification(entries, flags)
+		}
 		var blocks int64
 		if flags.L {
 			for _, file := range entries {

@@ -9,12 +9,12 @@ func NonRecursive(dir string, flags Flags) {
 		Fail = append(Fail, dir)
 		return
 	}
+	// Sort the files and folders
+	sortFilesAndFolders(filesAndFolders, flags)
 	// Sort by modification time if -t flag is set
 	if flags.T {
 		sortByModification(filesAndFolders, flags)
 	}
-	// Sort the files and folders
-	sortFilesAndFolders(filesAndFolders, flags)
 	// Print the files and folders
 	for _, file := range filesAndFolders {
 		printFileOrDir(file, file.Info.IsDir(), flags)

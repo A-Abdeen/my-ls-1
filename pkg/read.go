@@ -3,14 +3,20 @@ package Myls
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 // Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
+	var file string
+	if strings.ContainsRune(dir, '/'){
+		dir, file, _  = strings.Cut(dir, "/")
+	}
 	entries, err := os.ReadDir(dir)
 	if err != nil {
 		if dir != "" {
 			entries, _ = os.ReadDir(".")
+			file = dir
 		}else {
 		return nil, err
 	}
@@ -18,7 +24,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 
 	var filesAndFolders []File
 	for _, entry := range entries {
-		if dir != entry.Name() {
+		if file != "" && file != entry.Name(){
 			continue
 		}
 		if !flag.A && entry.Name()[0] == '.' {
