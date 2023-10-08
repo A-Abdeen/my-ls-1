@@ -9,19 +9,15 @@ import (
 // Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
 	var file string
-	if strings.ContainsRune(dir, '/'){
-		dir, file, _  = strings.Cut(dir, "/")
-	}
 	entries, err := os.ReadDir(dir)
 	if err != nil {
-		if dir != "" {
+		if strings.ContainsRune(dir, '/'){
+		dir, file, _  = strings.Cut(dir, "/")
+	} else {
 			entries, _ = os.ReadDir(".")
 			file = dir
-		}else {
-		return nil, err
 	}
 }
-
 	var filesAndFolders []File
 	for _, entry := range entries {
 		if file != "" && file != entry.Name(){
@@ -39,5 +35,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 		}
 		filesAndFolders = append(filesAndFolders, file)
 	}
+
 	return filesAndFolders, nil
+
 }

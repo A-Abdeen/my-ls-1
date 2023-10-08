@@ -1,24 +1,29 @@
 package Myls
 
+import ("strings")
 // Sorts the files and folders by alphabetical order
 func sortFilesAndFolders(filesAndFolders []File, flags Flags) []File {
 	for i:=0;i<len(filesAndFolders);i++{
 		for j:=i+1;j<len(filesAndFolders);j++{
-			for k:=0;k<len(filesAndFolders[i].Info.Name());k++{
+			for k:=0;(k<len(filesAndFolders[i].Info.Name()) && k<len(filesAndFolders[j].Info.Name()));k++{
+				x := (filesAndFolders[j].Info.Name())
+				y := (filesAndFolders[i].Info.Name())
+				x = strings.ToLower(x)
+				y = strings.ToLower(y)
 			if !flags.Rr{
-				if filesAndFolders[i].Info.Name()[k] > filesAndFolders[j].Info.Name()[k]{
+				if y[k] > x[k]{
 				filesAndFolders[i], filesAndFolders[j] = filesAndFolders[j], filesAndFolders[i]
 				break
-			}else if filesAndFolders[i].Info.Name()[k] == filesAndFolders[j].Info.Name()[k] {
+			}else if x[k] == y[k] {
 				continue
 			} else {
 				break
 			}
 		}else{
-			if filesAndFolders[i].Info.Name()[k] < filesAndFolders[j].Info.Name()[k]{
+			if y[k] < x[k]{
 				filesAndFolders[i], filesAndFolders[j] = filesAndFolders[j], filesAndFolders[i]
 				break
-			}else if filesAndFolders[i].Info.Name()[k] == filesAndFolders[j].Info.Name()[k] {
+			}else if x[k] == y[k]{
 				continue
 			} else {
 				break

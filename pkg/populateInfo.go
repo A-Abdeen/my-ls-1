@@ -33,11 +33,14 @@ func (f *File) PopulateInfo() error {
 	}
 	f.Owner = owner.Username
 
-	// Group, err := user.LookupGroup(fmt.Sprintf("%d", stat.Gid))
-	// if err != nil {
-	// 	return err
-	// }
+	// Group, _ := user.LookupGroup(strconv.Itoa(int(stat.Gid)))
 	// f.Group = Group.Name
+	Group, err := user.LookupGroup(fmt.Sprintf("%d", stat.Gid))
+	if err != nil {
+		fmt.Println("here")
+		return err
+	}
+	f.Group = Group.Name
 
 	f.Size = info.Size()
 

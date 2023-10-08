@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-
+"strings"
 	Myls "Myls/pkg"
 )
 
@@ -30,8 +30,19 @@ func main() {
 	if flags.L && !flags.R {
 		fmt.Println("total ", Myls.TotalBlocks/2)
 	}
-	for _, success := range Myls.Success {
-		fmt.Print(success)
+	// for i, success := range Myls.Success {
+	// 	fmt.Println(success[i], "\t", success[i+1])
+	// 	i++
+	// }
+	for i:=0;i<len(Myls.Success);i++{
+		if !flags.L{
+		if i >= (len(Myls.Success)/2){
+			break
+		}
+		fmt.Println(Myls.Success[i], strings.Repeat(" ", (55-len(Myls.Success[i]))), Myls.Success[(len(Myls.Success)/2)+i])
+	} else {
+		fmt.Print(Myls.Success[i])
 	}
+}	
 	// fmt.Println()
 }

@@ -15,7 +15,6 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		// fmt.Println()
 		Success = append(Success, "\n\n")
 	}
-	fmt.Print("fff")
 	// Recursive function to process directories
 	var processDir func(dir string) error
 	processDir = func(dir string) error {
