@@ -31,9 +31,9 @@ var (
 )
 
 const (
-	Blue    = "\033[1;34m"
-	Green   = "\033[0;32m"
-	Cyan    = "\033[0;36m"
+	Blue    = "\033[1;94m"
+	Green   = "\033[1;92m"
+	Cyan    = "\033[1;96m"
 	Yellow  = "\033[30;43m" // black foreground, yellow background
 	Magenta = "\033[0;35m"
 	Red     = "\033[0;31m"

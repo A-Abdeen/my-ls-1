@@ -11,16 +11,20 @@ func Read(dir string, flag Flags) ([]File, error) {
 	var file string
 	entries, err := os.ReadDir(dir)
 	if err != nil {
-		if strings.ContainsRune(dir, '/'){
+		if strings.ContainsRune(dir, '/'){			
 		dir, file, _  = strings.Cut(dir, "/")
+		entries, _ = os.ReadDir(dir)
 	} else {
 			entries, _ = os.ReadDir(".")
 			file = dir
 	}
 }
+
 	var filesAndFolders []File
 	for _, entry := range entries {
-		if file != "" && file != entry.Name(){
+		// fmt.Println(entry)
+		// fmt.Println(file)
+		if file != "" && (file) != entry.Name(){
 			continue
 		}
 		if !flag.A && entry.Name()[0] == '.' {
@@ -35,7 +39,9 @@ func Read(dir string, flag Flags) ([]File, error) {
 		}
 		filesAndFolders = append(filesAndFolders, file)
 	}
-
+	if filesAndFolders == nil {
+		return nil, err
+	}
 	return filesAndFolders, nil
 
 }

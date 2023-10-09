@@ -21,7 +21,7 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		entries, err := Read(dir, flags)
 		if err != nil {
 			Fail = append(Fail, dir)
-			fmt.Print(err)
+			// fmt.Print(err)
 			return err
 		}
 
