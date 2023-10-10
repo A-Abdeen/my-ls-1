@@ -39,10 +39,14 @@ func main() {
 		if i >= (len(Myls.Success)/2){
 			break
 		}
-		fmt.Println(Myls.Success[i], strings.Repeat(" ", (55-len(Myls.Success[i]))), Myls.Success[(len(Myls.Success)/2)+i])
+		
+		spacesneeded := ((len(Myls.Size.Dir))+ 15)-len(Myls.Success[i])
+		fmt.Println(Myls.Success[i], strings.Repeat(" ", spacesneeded), Myls.Success[(len(Myls.Success)/2)+i])
 	} else {
 		fmt.Print(Myls.Success[i])
 	}
 }	
+if !flags.L{
 	fmt.Println()
+}
 }

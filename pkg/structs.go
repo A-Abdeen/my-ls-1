@@ -14,6 +14,7 @@ type File struct {
 	Size        int64       // Adding Size field
 	ModTime     time.Time   // Adding ModTime field
 	blockSize   int64       // Adding blockSize field
+	Dir         string      // for Size variable
 }
 
 type Flags struct {
@@ -28,6 +29,7 @@ var (
 	Fail        []string
 	Success     []string
 	TotalBlocks int64
+	Size        File
 )
 
 const (

@@ -43,5 +43,5 @@ func Read(dir string, flag Flags) ([]File, error) {
 		return nil, err
 	}
 	return filesAndFolders, nil
-
+	
 }

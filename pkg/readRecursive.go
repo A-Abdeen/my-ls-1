@@ -28,7 +28,7 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		// Print the directory name
 		// fmt.Println(dir + ":")
 		Success = append(Success, dir+":\n")
-
+		
 		// Print the directory entries
 		entries = sortFilesAndFolders(entries, flags)
 		if flags.T {

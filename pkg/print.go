@@ -45,9 +45,12 @@ func printFileOrDir(file File, isDir bool, flags Flags) {
 
 	// print directory in blue color and bold
 	if flags.L {
-		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+" "+string(file.Group)+" "+fmt.Sprint(file.Size)+" "+string(file.ModTime.Format("Jan 2 15:04"))+" "+color+file.Info.Name()+Reset+"\n")
+		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+" "+string(file.Group)+" "+fmt.Sprint(file.Size)+" "+string(file.ModTime.Format("Jan 02 15:04"))+" "+color+file.Info.Name()+Reset+"\n")
 	} else {
 		Success = append(Success, color+file.Info.Name()+"  "+Reset)
+		if len(file.Info.Name()) > len(Size.Dir) {
+			Size.Dir = file.Info.Name()
+		}
 	}
 }
 
