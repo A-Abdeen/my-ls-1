@@ -1,11 +1,9 @@
 package Myls
-
 import (
 	"fmt"
 	"os"
 	"strings"
 )
-
 // Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
 	var file string
@@ -19,7 +17,6 @@ func Read(dir string, flag Flags) ([]File, error) {
 			file = dir
 	}
 }
-
 	var filesAndFolders []File
 	for _, entry := range entries {
 		// fmt.Println(entry)
@@ -30,7 +27,6 @@ func Read(dir string, flag Flags) ([]File, error) {
 		if !flag.A && entry.Name()[0] == '.' {
 			continue
 		}
-
 		file := File{Info: entry}
 		err := file.PopulateInfo()
 		if err != nil {

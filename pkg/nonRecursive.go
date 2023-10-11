@@ -4,7 +4,7 @@ package Myls
 func NonRecursive(dir string, flags Flags) {
 	// Read the directory
 	filesAndFolders, err := Read(dir, flags)
-	if err != nil {
+	if err != nil || dir == "-" {
 		Fail = append(Fail, dir)
 		return
 	}

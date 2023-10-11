@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	flags, args := Myls.Parse()
+	flags, args, err := Myls.Parse()
+	
 	if len(args) == 0 {
 		if !flags.R {
 			Myls.NonRecursive(".", flags)
@@ -25,15 +26,12 @@ func main() {
 	}
 	// Myls.Success = Myls.TrimEmptyStrings(Myls.Success)
 	for _, fail := range Myls.Fail {
-		fmt.Print("myls: cannot access '" + fail + "': No such file or directory")
+		fmt.Print("myls: cannot access '" + fail + "': No such file or directory\n")
 	}
-	if flags.L && !flags.R {
+	if flags.L && !flags.R && len(Myls.Success)> 1 {
 		fmt.Println("total ", Myls.TotalBlocks/2)
 	}
-	// for i, success := range Myls.Success {
-	// 	fmt.Println(success[i], "\t", success[i+1])
-	// 	i++
-	// }
+	if !err{
 	for i:=0;i<len(Myls.Success);i++{
 		if (len(Myls.Success)>80) && !flags.L{
 		if i >= (len(Myls.Success)/2){
@@ -48,5 +46,6 @@ func main() {
 }	
 if !flags.L{
 	fmt.Println()
+}
 }
 }

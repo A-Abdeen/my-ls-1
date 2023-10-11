@@ -1,9 +1,7 @@
 package Myls
-
 import (
 	"fmt"
 )
-
 func ReadRecursive(rootDir string, flags Flags) error {
 	// Helper function to print entries in a directory
 	
@@ -13,7 +11,7 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		}
 		// fmt.Println()
 		// fmt.Println()
-		Success = append(Success, "\n\n")
+		Success = append(Success, "\n")
 	}
 	// Recursive function to process directories
 	var processDir func(dir string) error
@@ -24,7 +22,6 @@ func ReadRecursive(rootDir string, flags Flags) error {
 			// fmt.Print(err)
 			return err
 		}
-
 		// Print the directory name
 		// fmt.Println(dir + ":")
 		Success = append(Success, dir+":\n")
@@ -43,7 +40,6 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		}
 		
 		printEntries(dir, entries)
-
 		// Find subdirectories and process them recursively
 		for _, entry := range entries {
 			if entry.Info.IsDir() {
@@ -53,9 +49,7 @@ func ReadRecursive(rootDir string, flags Flags) error {
 				}
 			}
 		}
-
 		return nil
 	}
-
 	return processDir(rootDir)
 }
