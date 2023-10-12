@@ -7,7 +7,7 @@ func ReadRecursive(rootDir string, flags Flags) error {
 	
 	printEntries := func(dir string, entries []File) {
 		for _, entry := range entries {
-			printFileOrDir(entry, entry.Info.IsDir(), flags)
+			printFileOrDir(entry, flags)
 		}
 		// fmt.Println()
 		// fmt.Println()

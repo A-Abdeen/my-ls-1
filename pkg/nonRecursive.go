@@ -15,7 +15,7 @@ func NonRecursive(dir string, flags Flags) {
 	}
 	// Print the files and folders
 	for _, file := range filesAndFolders {
-		printFileOrDir(file, file.Info.IsDir(), flags)
+		printFileOrDir(file, flags)
 	}
 	// fmt.Println()
 	for _, file := range filesAndFolders {

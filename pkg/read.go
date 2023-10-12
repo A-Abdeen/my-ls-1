@@ -8,6 +8,11 @@ import (
 func Read(dir string, flag Flags) ([]File, error) {
 	var file string
 	entries, err := os.ReadDir(dir)
+	originFile, _ := os.Readlink(dir)
+	if originFile != "" {
+		entries, _ = os.ReadDir(".")
+			file = dir
+	}
 	if err != nil {
 		if strings.ContainsRune(dir, '/'){			
 		dir, file, _  = strings.Cut(dir, "/")

@@ -7,10 +7,10 @@ import (
 	"time"
 )
 // Prints the file or directory
-func printFileOrDir(file File, isDir bool, flags Flags) {
+func printFileOrDir(file File, flags Flags) {
 	color := Reset // Default color
 	originFile := ""
-	if isDir { // Directory
+	if file.Info.IsDir() { // Directory
 		color = Blue
 	} else { // File
 		if isBrokenLink(file) {
