@@ -1,5 +1,4 @@
 package Myls
-
 // Sorts the files and folders by modification time
 func sortByModification(filesAndFolders []File, flags Flags) []File {
 for i:=0;i<len(filesAndFolders);i++{

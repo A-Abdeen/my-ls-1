@@ -1,18 +1,14 @@
 package Myls
-
 import (
 	"os"
 	"strings"
 	// "fmt"
 )
-
 // struct that holds the flags that are set
 func Parse() (Flags, []string, bool) {
 	var flags Flags
-
 	args := os.Args[1:]
 	var nonFlagArgs []string // To store non-flag arguments
-
 	for _, arg := range args {
 		if strings.HasPrefix(arg, "-") {
 			flagsSet := strings.TrimPrefix(arg, "-")
@@ -38,6 +34,5 @@ func Parse() (Flags, []string, bool) {
 			nonFlagArgs = append(nonFlagArgs, arg) // Store non-flag arguments
 		}
 	}
-
 	return flags, nonFlagArgs, false
 }

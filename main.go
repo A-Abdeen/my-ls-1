@@ -1,11 +1,9 @@
 package main
-
 import (
 	"fmt"
 "strings"
 	Myls "Myls/pkg"
 )
-
 func main() {
 	flags, args, err := Myls.Parse()
 	

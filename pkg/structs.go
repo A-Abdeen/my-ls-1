@@ -12,7 +12,7 @@ type File struct {
 	Size        int64       // Adding Size field
 	ModTime     time.Time   // Adding ModTime field
 	blockSize   int64       // Adding blockSize field
-	Dir         string      // for Size variable
+	Dir         string      // for Size variable    
 }
 type Flags struct {
 	L  bool

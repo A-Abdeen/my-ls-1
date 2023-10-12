@@ -1,7 +1,6 @@
 package Myls
-import "fmt"
+
 func FindSize(file *File) {
-	fmt.Println(1)
 	if len(file.Group) > len(Size.Group) {
 		Size.Group = file.Group
 	}

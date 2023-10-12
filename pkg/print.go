@@ -1,16 +1,15 @@
 package Myls
-
 import (
 	"fmt"
 	"os"
-	// "strconv"
+	"strconv"
 	"strings"
 	"time"
 )
-
 // Prints the file or directory
 func printFileOrDir(file File, isDir bool, flags Flags) {
 	color := Reset // Default color
+	originFile := ""
 	if isDir { // Directory
 		color = Blue
 	} else { // File
@@ -19,6 +18,8 @@ func printFileOrDir(file File, isDir bool, flags Flags) {
 		}
 		if file.Info.Type()&os.ModeSymlink != 0 { // Valid symbolic link
 			color = Cyan
+			originFile, _ = os.Readlink(file.Info.Name())
+			originFile = " -> " + originFile
 		}
 		fileType := file.Info.Type()
 		if fileType.IsRegular() {
@@ -37,8 +38,8 @@ func printFileOrDir(file File, isDir bool, flags Flags) {
 		}
 	}
 	// print directory in blue color and bold
-	// sizestring, _ := strconv.Atoi(file.Size)
-	// spacesneeded := s
+	spacesNeededSize := " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))
+	// spacesNeededGroup:=  strings.Repeat(" ", len(Size.Group)-len(file.Group))+spacesNeededGroup+ " " +string(file.Group)
 	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC) 
 	var printtime string
 	if file.ModTime.After(t){
@@ -47,7 +48,7 @@ func printFileOrDir(file File, isDir bool, flags Flags) {
 		printtime = string(file.ModTime.Format("Jan 03 2022"))
 	}
 	if flags.L {
-		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+" "+string(file.Group)+" "+fmt.Sprint(file.Size)+" "+printtime+" "+color+file.Info.Name()+Reset+"\n")
+		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner) +spacesNeededSize+fmt.Sprint(file.Size)+" "+printtime+" "+color+file.Info.Name()+Reset+originFile+"\n")
 	} else {
 		Success = append(Success, color+file.Info.Name()+"  "+Reset)
 		if len(file.Info.Name()) > len(Size.Dir) {
