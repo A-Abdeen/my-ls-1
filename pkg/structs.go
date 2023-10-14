@@ -22,6 +22,7 @@ type Flags struct {
 	A  bool
 	Rr bool
 	T  bool
+	F  bool
 }
 
 var (

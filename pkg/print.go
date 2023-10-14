@@ -12,6 +12,10 @@ import (
 func printFileOrDir(file File, flags Flags) {
 	color := Reset // Default color
 	originFile := ""
+	filename := file.Info.Name()
+	if Alphanumeric(filename) == "" {
+		filename = "'" + filename + "'"
+	}
 	if file.Info.IsDir() { // Directory
 		color = Blue
 	} else { // File
@@ -19,21 +23,11 @@ func printFileOrDir(file File, flags Flags) {
 			color = BRed
 		}
 		if file.Info.Type()&os.ModeSymlink != 0 { // Valid symbolic link
-			color = Cyan
-			originFile, _ = os.Readlink(file.Info.Name())
-			for _, file23 := range FilesAndFolders23 {
-				if originFile == file23.Info.Name() && file23.Info.IsDir() {
-					// fmt.Println(file23)
-					if flags.L{
-					originFile = Blue + originFile + Reset
-				} else {
-					flags, _, _ := Parse()
-					NonRecursive(file23.Info.Name(), flags)
-					return					
-				}
-			}
-			}
-			originFile = " -> " + originFile
+			color = Cyan	
+			originFile = symLinkFunc(file, flags)
+			if originFile == ""{
+				return
+			}			
 		}
 		fileType := file.Info.Type()
 		if fileType.IsRegular() {
@@ -54,6 +48,7 @@ func printFileOrDir(file File, flags Flags) {
 	// print directory in blue color and bold
 	spacesNeededSize := " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))
 	// spacesNeededGroup:=  strings.Repeat(" ", len(Size.Group)-len(file.Group))+spacesNeededGroup+ " " +string(file.Group)
+	spacesPerm:=  strings.Repeat(" ", len(Size.Permissions.String())-len(file.Permissions.String())) + " "
 	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC)
 	var printtime string
 	if file.ModTime.After(t) {
@@ -62,16 +57,22 @@ func printFileOrDir(file File, flags Flags) {
 		printtime = string(file.ModTime.Format("Jan 03 2022"))
 	}
 	if flags.L {
-		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededSize+fmt.Sprint(file.Size)+" "+printtime+" "+color+file.Info.Name()+Reset+originFile+"\n")
-	} else {
-		Success = append(Success, color+file.Info.Name()+"  "+Reset)
+		Success = append(Success, fmt.Sprint(file.Permissions)+spacesPerm+fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededSize+fmt.Sprint(file.Size)+" "+printtime+" "+color+filename+Reset+originFile+"\n")
+	} else if flags.F {
+		filename = FFlagFunc(file)
+		Success = append(Success, color+filename+"  "+Reset)
 		if len(file.Info.Name()) > len(Size.Dir) {
 			Size.Dir = file.Info.Name()
 		}
+	} else {
+		Success = append(Success, color+filename+"  "+Reset)
+		if len(file.Info.Name()) > len(Size.Dir) {
+			Size.Dir = file.Info.Name()
+		}
+
 	}
 }
-
-// isBrokenLink checks if a symbolic link is broken (i.e., its target does not exist).
+	// isBrokenLink checks if a symbolic link is broken (i.e., its target does not exist).
 func isBrokenLink(file File) bool {
 	// If it's not a symlink, it can't be a broken link
 	if file.Info.Type()&os.ModeSymlink == 0 {

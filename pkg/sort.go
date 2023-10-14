@@ -2,6 +2,7 @@ package Myls
 
 import (
 	"strings"
+	// "os"
 )
 
 // Sorts the files and folders by alphabetical order
@@ -14,6 +15,11 @@ func sortFilesAndFolders(filesAndFolders []File, flags Flags) []File {
 				y = strings.ToLower(y)
 				x = Alphanumeric(x)
 				y = Alphanumeric(y)
+				if x == "" && !flags.Rr{		
+					x = "!!"
+				} else if y == "" && flags.Rr {
+					y = "!!"
+				}
 				for k := 0; k < len(x) && k < len(y); k++ {
 				if !flags.Rr {
 					if y[k] > x[k] {

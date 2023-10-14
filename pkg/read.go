@@ -9,7 +9,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 	var singlefile string
 	entries, err := os.ReadDir(dir)
 	OriginFile, _ := os.Readlink(dir)
-	if OriginFile != "" {
+if OriginFile != "" {
 		entries, _ = os.ReadDir(".")
 			singlefile = dir
 	}
@@ -26,9 +26,14 @@ var filesAndFolders []File
 	for _, entry := range entries {
 		// fmt.Println(entry)
 		// fmt.Println(file)
+		
 		file := File{Info: entry}
 		err := file.PopulateInfo()
 		FilesAndFolders23 = append(FilesAndFolders23, file)
+		if OriginFile != "" {
+			fmt.Println(OriginFile)
+				singlefile = dir
+		}
 		if singlefile != "" && (singlefile) != entry.Name() {
 			continue
 		}

@@ -30,6 +30,8 @@ func Parse() (Flags, []string, bool) {
 					flags.Rr = true
 				case 't':
 					flags.T = true
+				case 'F':
+					flags.F = true
 				}
 			}
 		} else {

@@ -36,7 +36,7 @@ func main() {
 			if (len(Myls.Success) > 80) && !flags.L {
 				if i >= (len(Myls.Success) / 2) {
 					break
-				} else {
+				} else if i !=0{
 					fmt.Println()
 				}
 				spacesneeded := ((len(Myls.Size.Dir)) + 15) - len(Myls.Success[i])
