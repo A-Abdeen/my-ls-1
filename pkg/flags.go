@@ -1,9 +1,11 @@
 package Myls
+
 import (
 	"os"
 	"strings"
 	// "fmt"
 )
+
 // struct that holds the flags that are set
 func Parse() (Flags, []string, bool) {
 	var flags Flags
@@ -12,9 +14,9 @@ func Parse() (Flags, []string, bool) {
 	for _, arg := range args {
 		if strings.HasPrefix(arg, "-") {
 			flagsSet := strings.TrimPrefix(arg, "-")
-			if flagsSet == ""{
+			if flagsSet == "" {
 				Fail = append(Fail, "-")
-				return flags, nil,  true
+				return flags, nil, true
 			}
 			for _, flag := range flagsSet {
 				switch flag {
@@ -28,7 +30,7 @@ func Parse() (Flags, []string, bool) {
 					flags.Rr = true
 				case 't':
 					flags.T = true
-			}
+				}
 			}
 		} else {
 			nonFlagArgs = append(nonFlagArgs, arg) // Store non-flag arguments

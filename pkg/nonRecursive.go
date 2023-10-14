@@ -1,24 +1,25 @@
 package Myls
+
 // import "fmt"
 func NonRecursive(dir string, flags Flags) {
 	// Read the directory
-	FilesAndFolders, err := Read(dir, flags)
+	filesAndFolders, err := Read(dir, flags)
 	if err != nil || dir == "-" {
 		Fail = append(Fail, dir)
 		return
 	}
 	// Sort the files and folders
-	sortFilesAndFolders(FilesAndFolders, flags)
+	sortFilesAndFolders(filesAndFolders, flags)
 	// Sort by modification time if -t flag is set
 	if flags.T {
-		sortByModification(FilesAndFolders, flags)
+		sortByModification(filesAndFolders, flags)
 	}
 	// Print the files and folders
-	for _, file := range FilesAndFolders {
+	for _, file := range filesAndFolders {
 		printFileOrDir(file, flags)
 	}
 	// fmt.Println()
-	for _, file := range FilesAndFolders {
+	for _, file := range filesAndFolders {
 		TotalBlocks += file.blockSize
 	}
 }

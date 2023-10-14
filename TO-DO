@@ -11,10 +11,6 @@ Is the output displayed the same way? Number of / must be the same.
 (TOUGH dev) 
 Run both my-ls and the system command ls with the arguments: "-la /dev"
 Does it display the same files and/or folders with the same display? Do not pay attention to ACL permission flag.
-(TOUGH symlink)
-Create file and link for this file and run both my-ls-1 and the system command ls with the arguments: "-l <symlink file>"
-Is the displayed output the same?
-Create directory that contains files and link for this directory and run both my-ls-1 and the system command ls with the arguments: "-l <symlink dir>"
 Is the displayed output the same?
 As an auditor, is this project up to every standard? If not, why are you failing the project?(Empty Work, Incomplete Work, Invalid compilation, Cheating, Crashing, Leaks)
 GroupID

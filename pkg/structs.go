@@ -1,8 +1,10 @@
 package Myls
+
 import (
 	"os"
 	"time"
 )
+
 type File struct {
 	Info        os.DirEntry
 	Permissions os.FileMode // Adding Permissions field
@@ -12,7 +14,7 @@ type File struct {
 	Size        int64       // Adding Size field
 	ModTime     time.Time   // Adding ModTime field
 	blockSize   int64       // Adding blockSize field
-	Dir         string      // for Size variable    
+	Dir         string      // for Size variable
 }
 type Flags struct {
 	L  bool
@@ -21,13 +23,17 @@ type Flags struct {
 	Rr bool
 	T  bool
 }
+
 var (
-	Fail        []string
-	Success     []string
-	TotalBlocks int64
-	Size        File
+	Fail            []string
+	Success         []string
+	TotalBlocks     int64
+	Size            File
 	FilesAndFolders []File
+	FilesAndFolders23 []File
+
 )
+
 const (
 	Blue    = "\033[1;94m"
 	Green   = "\033[1;92m"

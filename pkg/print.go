@@ -1,4 +1,5 @@
 package Myls
+
 import (
 	"fmt"
 	"os"
@@ -6,6 +7,7 @@ import (
 	"strings"
 	"time"
 )
+
 // Prints the file or directory
 func printFileOrDir(file File, flags Flags) {
 	color := Reset // Default color
@@ -18,11 +20,18 @@ func printFileOrDir(file File, flags Flags) {
 		}
 		if file.Info.Type()&os.ModeSymlink != 0 { // Valid symbolic link
 			color = Cyan
-			originFile, _ = os.Readlink(file.Info.Name())	
-			for _, file := range FilesAndFolders{
-				if originFile == file.Info.Name() && file.Info.IsDir(){
+			originFile, _ = os.Readlink(file.Info.Name())
+			for _, file23 := range FilesAndFolders23 {
+				if originFile == file23.Info.Name() && file23.Info.IsDir() {
+					// fmt.Println(file23)
+					if flags.L{
 					originFile = Blue + originFile + Reset
+				} else {
+					flags, _, _ := Parse()
+					NonRecursive(file23.Info.Name(), flags)
+					return					
 				}
+			}
 			}
 			originFile = " -> " + originFile
 		}
@@ -45,15 +54,15 @@ func printFileOrDir(file File, flags Flags) {
 	// print directory in blue color and bold
 	spacesNeededSize := " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))
 	// spacesNeededGroup:=  strings.Repeat(" ", len(Size.Group)-len(file.Group))+spacesNeededGroup+ " " +string(file.Group)
-	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC) 
+	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC)
 	var printtime string
-	if file.ModTime.After(t){
+	if file.ModTime.After(t) {
 		printtime = string(file.ModTime.Format("Jan 02 15:04"))
 	} else {
 		printtime = string(file.ModTime.Format("Jan 03 2022"))
 	}
 	if flags.L {
-		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner) +spacesNeededSize+fmt.Sprint(file.Size)+" "+printtime+" "+color+file.Info.Name()+Reset+originFile+"\n")
+		Success = append(Success, fmt.Sprint(file.Permissions)+" "+fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededSize+fmt.Sprint(file.Size)+" "+printtime+" "+color+file.Info.Name()+Reset+originFile+"\n")
 	} else {
 		Success = append(Success, color+file.Info.Name()+"  "+Reset)
 		if len(file.Info.Name()) > len(Size.Dir) {
@@ -61,6 +70,7 @@ func printFileOrDir(file File, flags Flags) {
 		}
 	}
 }
+
 // isBrokenLink checks if a symbolic link is broken (i.e., its target does not exist).
 func isBrokenLink(file File) bool {
 	// If it's not a symlink, it can't be a broken link

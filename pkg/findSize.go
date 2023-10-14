@@ -10,7 +10,7 @@ func FindSize(file *File) {
 	if file.Links > Size.Links {
 		Size.Links = file.Links
 	}
-	if len(file.Permissions.String()) > len(Size.Permissions.String()){
+	if len(file.Permissions.String()) > len(Size.Permissions.String()) {
 		Size.Permissions = file.Permissions
 	}
 	if file.Size > Size.Size {

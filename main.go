@@ -1,12 +1,14 @@
 package main
+
 import (
-	"fmt"
-"strings"
 	Myls "Myls/pkg"
+	"fmt"
+	"strings"
 )
+
 func main() {
 	flags, args, err := Myls.Parse()
-	
+
 	if len(args) == 0 {
 		if !flags.R {
 			Myls.NonRecursive(".", flags)
@@ -26,24 +28,25 @@ func main() {
 	for _, fail := range Myls.Fail {
 		fmt.Print("myls: cannot access '" + fail + "': No such file or directory\n")
 	}
-	if flags.L && !flags.R && len(Myls.Success)> 1 {
+	if flags.L && !flags.R && len(Myls.Success) > 1 {
 		fmt.Println("total ", Myls.TotalBlocks/2)
 	}
-	if !err{
-	for i:=0;i<len(Myls.Success);i++{
-		if (len(Myls.Success)>80) && !flags.L{
-		if i >= (len(Myls.Success)/2){
-			break
+	if !err {
+		for i := 0; i < len(Myls.Success); i++ {
+			if (len(Myls.Success) > 80) && !flags.L {
+				if i >= (len(Myls.Success) / 2) {
+					break
+				} else {
+					fmt.Println()
+				}
+				spacesneeded := ((len(Myls.Size.Dir)) + 15) - len(Myls.Success[i])
+				fmt.Print(Myls.Success[i], strings.Repeat(" ", spacesneeded), Myls.Success[(len(Myls.Success)/2)+i])
+			} else {
+				fmt.Print(Myls.Success[i])
+			}
 		}
-		
-		spacesneeded := ((len(Myls.Size.Dir))+ 15)-len(Myls.Success[i])
-		fmt.Println(Myls.Success[i], strings.Repeat(" ", spacesneeded), Myls.Success[(len(Myls.Success)/2)+i])
-	} else {
-		fmt.Print(Myls.Success[i])
+		if !flags.L {
+			fmt.Println()
+		}
 	}
-}	
-if !flags.L{
-	fmt.Println()
-}
-}
 }

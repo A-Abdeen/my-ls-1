@@ -1,10 +1,12 @@
 package Myls
+
 import (
 	"errors"
 	"fmt"
 	"os/user"
 	"syscall"
 )
+
 // PopulateInfo populates the File struct with the information from the os.FileInfo struct
 func (f *File) PopulateInfo() error {
 	// Get the information from the os.FileInfo struct
@@ -33,7 +35,7 @@ func (f *File) PopulateInfo() error {
 	// }
 	// f.Group = Group.Name
 	f.Size = info.Size()
-	
+
 	f.ModTime = info.ModTime()
 	FindSize(f)
 	return nil
