@@ -10,6 +10,8 @@ func sortFilesAndFolders(filesAndFolders []File, flags Flags) []File {
 				y := (filesAndFolders[i].Info.Name())
 				x = strings.ToLower(x)
 				y = strings.ToLower(y)
+				x = Alphanumeric(x)
+				y = Alphanumeric(y)
 			if !flags.Rr{
 				if y[k] > x[k]{
 				filesAndFolders[i], filesAndFolders[j] = filesAndFolders[j], filesAndFolders[i]

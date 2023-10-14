@@ -8,8 +8,8 @@ import (
 func Read(dir string, flag Flags) ([]File, error) {
 	var file string
 	entries, err := os.ReadDir(dir)
-	originFile, _ := os.Readlink(dir)
-	if originFile != "" {
+	OriginFile, _ := os.Readlink(dir)
+	if OriginFile != "" {
 		entries, _ = os.ReadDir(".")
 			file = dir
 	}
@@ -22,11 +22,10 @@ func Read(dir string, flag Flags) ([]File, error) {
 			file = dir
 	}
 }
-	var filesAndFolders []File
 	for _, entry := range entries {
 		// fmt.Println(entry)
 		// fmt.Println(file)
-		if file != "" && (file) != entry.Name(){
+		if file != "" && (file) != entry.Name() {
 			continue
 		}
 		if !flag.A && entry.Name()[0] == '.' {
@@ -38,11 +37,11 @@ func Read(dir string, flag Flags) ([]File, error) {
 			fmt.Println("Error:", err)
 			continue
 		}
-		filesAndFolders = append(filesAndFolders, file)
+		FilesAndFolders = append(FilesAndFolders, file)
 	}
-	if filesAndFolders == nil {
+	if FilesAndFolders == nil {
 		return nil, err
 	}
-	return filesAndFolders, nil
+	return FilesAndFolders, nil
 	
 }

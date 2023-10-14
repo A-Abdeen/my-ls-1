@@ -26,6 +26,7 @@ var (
 	Success     []string
 	TotalBlocks int64
 	Size        File
+	FilesAndFolders []File
 )
 const (
 	Blue    = "\033[1;94m"

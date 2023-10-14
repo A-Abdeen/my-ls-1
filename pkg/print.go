@@ -18,7 +18,12 @@ func printFileOrDir(file File, flags Flags) {
 		}
 		if file.Info.Type()&os.ModeSymlink != 0 { // Valid symbolic link
 			color = Cyan
-			originFile, _ = os.Readlink(file.Info.Name())
+			originFile, _ = os.Readlink(file.Info.Name())	
+			for _, file := range FilesAndFolders{
+				if originFile == file.Info.Name() && file.Info.IsDir(){
+					originFile = Blue + originFile + Reset
+				}
+			}
 			originFile = " -> " + originFile
 		}
 		fileType := file.Info.Type()
