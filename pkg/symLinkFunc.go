@@ -12,8 +12,8 @@ func symLinkFunc(file File, flags Flags) string {
 		originFile, err = os.Readlink("/usr/bin/" + file.Info.Name())
 		originFile = Green + originFile + Reset
 	if err != nil {
-		originFile, _ = os.Readlink("/dev" + file.Info.Name())
-		originFile = Green + originFile + Reset
+		originFile, _ = os.Readlink("/dev/" + file.Info.Name())
+		originFile = Yellow + originFile + Reset
 	}
 	}
 	// originFile2 := os.Symlink(file.Info.Name(), "pkg")

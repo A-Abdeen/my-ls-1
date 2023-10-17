@@ -37,6 +37,19 @@ func (f *File) PopulateInfo() error {
 	f.Size = info.Size()
 
 	f.ModTime = info.ModTime()
+	year, _, _ := f.ModTime.Date()
+	f.ModYear = year
+	f.MajorNumb = Major(uint64(f.Size))
 	FindSize(f)
 	return nil
+}
+
+func Major(dev uint64) uint32 {
+
+	major := uint32((dev & 0x00000000000fff00) >> 8)
+
+	major |= uint32((dev & 0xfffff00000000000) >> 32)
+
+	return major
+
 }
