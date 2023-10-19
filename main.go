@@ -27,13 +27,17 @@ func main() {
 	// Myls.Success = Myls.TrimEmptyStrings(Myls.Success)
 	for _, fail := range Myls.Fail {
 		fmt.Print("myls: cannot access '" + fail + "': No such file or directory\n")
+		
+		if flags.L && !flags.R && len(Myls.Success) > 1 {
+		fmt.Println("total ", Myls.TotalBlocks/2)
+	}
 	}
 	if flags.L && !flags.R && len(Myls.Success) > 1 {
 		fmt.Println("total ", Myls.TotalBlocks/2)
 	}
 	if !err {
 		for i := 0; i < len(Myls.Success); i++ {
-			if (len(Myls.Success) > 80) && !flags.L {
+			if (len(Myls.Success) > 80) && !flags.L && !flags.Rr{
 				if i >= (len(Myls.Success) / 2) {
 					break
 				} else if i !=0{

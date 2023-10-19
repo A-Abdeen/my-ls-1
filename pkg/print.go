@@ -49,20 +49,26 @@ func printFileOrDir(file File, flags Flags) {
 			stringPermissions = strings.TrimPrefix(stringPermissions, "D")
 			color = Yellow
 		}
+		if strings.HasPrefix(stringPermissions, "L"){
+		stringPermissions= strings.Replace(stringPermissions, "L", "l", 1)
+		}
+
 	}
 	// print directory in blue color and bold
+	var spacesNeededGroup string
 	spacesNeededSize := " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))
-	// spacesNeededGroup:=  strings.Repeat(" ", len(Size.Group)-len(file.Group))+spacesNeededGroup+ " " +string(file.Group)
+	spacesNeededGroup = " "+string(file.Group)+  strings.Repeat(" ", len(Size.Group)-len(file.Group)) 
 	spacesPerm:=  strings.Repeat(" ", len(Size.Permissions.String())-len(stringPermissions)) + " "
+	spacesNeededOwner := strings.Repeat(" ", len(Size.Owner)-len(file.Owner))
 	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC)
 	var printtime string
 	if file.ModTime.After(t) {
 		printtime = " " + string(file.ModTime.Format("Jan 02 15:04")) + " "
 	} else {
-		printtime = " " + string(file.ModTime.Format("Jan 03")+"  "+strconv.Itoa(file.ModYear)) + " "
+		printtime = " " + string(file.ModTime.Format("Jan 02")+"  "+strconv.Itoa(file.ModYear)) + " "
 	}
 	if flags.L {
-		Success = append(Success, stringPermissions+spacesPerm+fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededSize+fmt.Sprint(file.Size)+printtime+color+filename+Reset+originFile+strconv.Itoa(int(file.MajorNumb)) + "\n")
+		Success = append(Success, stringPermissions+spacesPerm+fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededOwner+spacesNeededGroup+spacesNeededSize+fmt.Sprint(file.Size)+printtime+color+filename+Reset+originFile+"\n")
 	} else if flags.F {
 		filename = FFlagFunc(file)
 		Success = append(Success, color+filename+"  "+Reset)

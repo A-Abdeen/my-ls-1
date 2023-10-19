@@ -12,12 +12,12 @@ func Parse() (Flags, []string, bool) {
 	args := os.Args[1:]
 	var nonFlagArgs []string // To store non-flag arguments
 	for _, arg := range args {
-		if strings.HasPrefix(arg, "-") {
+		if strings.HasPrefix(arg, "-") && len(arg) > 1 {
 			flagsSet := strings.TrimPrefix(arg, "-")
-			if flagsSet == "" {
-				Fail = append(Fail, "-")
-				return flags, nil, true
-			}
+			// if flagsSet == "" {
+			// 	Fail = append(Fail, "-")
+			// 	return flags, nil, true
+			// }
 			for _, flag := range flagsSet {
 				switch flag {
 				case 'l':

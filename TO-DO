@@ -1,17 +1,15 @@
-Run both my-ls and the system command ls with the flag: "-l /usr/bin".
-Does it display the same files and/or folders with the same display? Be aware of symbolic links.
-Run both my-ls and the system command ls with the flag: "-a".
+Run both my-ls and the system command ls with the flag: "-a". // .. missing
 Does it display the same files and/or folders in the same order?
 Run both my-ls and the system command ls with the flag: "-la".
 Does it display the same files and/or folders in the same order?
-Run both my-ls and the system command ls with the arguments: "-l <directory name> -a <file name>"
+Run both my-ls and the system command ls with the arguments: "-l <directory name> -a <file name>" // pkg missing and . .. missing
 Is the output displayed the same way?
 Run both my-ls and the system command ls with the arguments: "-lR <directory name>///<sub directory name>/// <directory name>/<sub directory name>/"
 Is the output displayed the same way? Number of / must be the same.
 (TOUGH dev) 
-Run both my-ls and the system command ls with the arguments: "-la /dev"
+Run both my-ls and the system command ls with the arguments: "-la /dev" // major minor
 Does it display the same files and/or folders with the same display? Do not pay attention to ACL permission flag.
-Is the displayed output the same?
+Create directory with - name and run both my-ls and the system command ls with the arguments: "-"
 As an auditor, is this project up to every standard? If not, why are you failing the project?(Empty Work, Incomplete Work, Invalid compilation, Cheating, Crashing, Leaks)
 GroupID-
 max min /dev

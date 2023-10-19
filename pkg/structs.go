@@ -16,7 +16,8 @@ type File struct {
 	ModYear     int   // Adding Modyear field   
 	blockSize   int64       // Adding blockSize field
 	Dir         string      // for Size variable
-	MajorNumb   uint32
+	MajorNumb   int
+	MinorNumb   int
 }
 type Flags struct {
 	L  bool
