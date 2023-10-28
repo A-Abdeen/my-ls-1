@@ -11,17 +11,14 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		for _, entry := range entries {
 			printFileOrDir(entry, flags)
 		}
-		// fmt.Println()
-		// fmt.Println()
-		Success = append(Success, "\n")
+		Success = append(Success, "\n\n")
 	}
 	// Recursive function to process directories
 	var processDir func(dir string) error
 	processDir = func(dir string) error {
 		entries, err := Read(dir, flags)
 		if err != nil {
-			Fail = append(Fail, dir)
-			// fmt.Print(err)
+			// Fail = append(Fail, dir)
 			return err
 		}
 		// Print the directory name

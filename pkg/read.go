@@ -15,22 +15,22 @@ func Read(dir string, flag Flags) ([]File, error) {
 if OriginFile != "" {
 		entries, _ = os.ReadDir(".")
 			singlefile = dir
-	}
+	} else {
 	if err != nil {
-		if strings.ContainsRune(dir, '/'){			
+		if strings.ContainsRune(dir, '/'){	
 		dir, singlefile, _  = strings.Cut(dir, "/")
 		entries, err2 = os.ReadDir(dir)
-		{
 			if err2 != nil {
 				fmt.Print("myls: cannot access '" + dir + "/': Not a directory\n")
 				return nil,nil
 			}
-		}
-
 	} else if strings.ContainsRune(dir, '.') && FilesAndFolders == nil{
 			entries, _ = os.ReadDir(".")
 			singlefile = dir
-	}
+	} else {
+		fmt.Print("myls: cannot access '" + dir + "/': No such file or directory\n")
+				return nil,err
+	}}
 }
 if flag.A {
 	entry1, _ := os.ReadDir(".")
