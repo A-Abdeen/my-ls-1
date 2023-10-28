@@ -21,27 +21,24 @@ func (f *File) PopulateInfo() error {
 	}
 	// Populate the File struct
 	f.Permissions = info.Mode()
-
 	// Add the number of blocks
 	f.blockSize = stat.Blocks
-
 	f.Links = uint64(stat.Nlink)
-
 	owner, err := user.LookupId(fmt.Sprintf("%d", stat.Uid))
 	if err != nil {
 		return err
 	}
 	f.Owner = owner.Username
-
 	Group, err := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
 	if err != nil {
 		return err
 	}
 	f.Group = Group.Name
-
 	f.Size = info.Size()
 
 	f.ModTime = info.ModTime()
-
+	year, _, _ := f.ModTime.Date()
+	f.ModYear = year
+	FindSize(f)
 	return nil
-}
+	}
