@@ -32,14 +32,23 @@ if OriginFile != "" {
 			singlefile = dir
 	}
 }
-
-var filesAndFolders []File
 if flag.A {
-	Success = append(Success, ". ")
-	Success = append(Success, ".. ")
+	entry1, _ := os.ReadDir(".")
+	entry2, _ := os.ReadDir(".")
+	entries = append(entries, entry1[0])
+	entries = append(entries, entry2[0])
 }
-	for _, entry := range entries {
+var filesAndFolders []File
+
+	for i, entry := range entries {
 		file := File{Info: entry}
+		if flag.A && i == len(entries)-1{
+		file.Name = ".."
+	}else if flag.A && i == len(entries)-2{
+		file.Name = "."
+	} else {
+		file.Name = file.Info.Name()
+	}
 		err := file.PopulateInfo()
 		FilesAndFolders23 = append(FilesAndFolders23, file)
 		if OriginFile != "" {
@@ -58,6 +67,7 @@ if flag.A {
 		}
 		filesAndFolders = append(filesAndFolders, file)
 	}
+	
 	if filesAndFolders == nil {
 		return nil, err
 	}

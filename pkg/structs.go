@@ -6,6 +6,7 @@ import (
 )
 
 type File struct {
+	Name        string
 	Info        os.DirEntry
 	Permissions os.FileMode // Adding Permissions field
 	Links       uint64      // Adding Links field

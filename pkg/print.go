@@ -12,9 +12,9 @@ import (
 func printFileOrDir(file File, flags Flags) {
 	color := Reset // Default color
 	originFile := ""
-	filename := file.Info.Name()
+	filename := file.Name
 	stringPermissions := fmt.Sprint(file.Permissions)
-	if Alphanumeric(filename) == "" {
+	if (filename) == "[" {
 		filename = "'" + filename + "'"
 	}
 	if file.Info.IsDir() { // Directory
@@ -56,10 +56,17 @@ func printFileOrDir(file File, flags Flags) {
 	}
 	// print directory in blue color and bold
 	var spacesNeededGroup string
-	spacesNeededSize := " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))
-	spacesNeededGroup = " "+string(file.Group)+  strings.Repeat(" ", len(Size.Group)-len(file.Group)) 
-	spacesPerm:=  strings.Repeat(" ", len(Size.Permissions.String())-len(stringPermissions)) + " "
-	spacesNeededOwner := strings.Repeat(" ", len(Size.Owner)-len(file.Owner))
+	var spacesNeededSize string
+	var spacesPerm string
+	var spacesNeededOwner string
+	if len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))) >= 0{
+	spacesNeededSize = " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))}
+	if len(Size.Group)-len(file.Group)>=0{
+	spacesNeededGroup = " "+string(file.Group)+  strings.Repeat(" ", len(Size.Group)-len(file.Group))} 
+	if len(Size.Permissions.String())-len(stringPermissions) >=0{
+	spacesPerm = strings.Repeat(" ", len(Size.Permissions.String())-len(stringPermissions)) + " "}
+	if len(Size.Owner)-len(file.Owner) >=0{
+	spacesNeededOwner = strings.Repeat(" ", len(Size.Owner)-len(file.Owner))}
 	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC)
 	var printtime string
 	if file.ModTime.After(t) {

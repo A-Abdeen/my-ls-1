@@ -12,7 +12,7 @@ func Parse() (Flags, []string, bool) {
 	args := os.Args[1:]
 	var nonFlagArgs []string // To store non-flag arguments
 	for _, arg := range args {
-		if strings.HasPrefix(arg, "-") && len(arg) > 1 {
+		if strings.HasPrefix(arg, "-") && len(arg) > 1{
 			flagsSet := strings.TrimPrefix(arg, "-")
 			// if flagsSet == "" {
 			// 	Fail = append(Fail, "-")

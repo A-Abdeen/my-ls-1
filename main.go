@@ -49,7 +49,7 @@ func main() {
 				fmt.Print(Myls.Success[i])
 			}
 		}
-		if !flags.L {
+		if !flags.L && len(Myls.Success) != 0{
 			fmt.Println()
 		}
 	}
