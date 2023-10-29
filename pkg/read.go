@@ -8,8 +8,8 @@ import (
 
 // Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
-	var singlefile string
 	var err2 error
+	var singlefile string
 	entries, err := os.ReadDir(dir)
 	OriginFile, _ := os.Readlink(dir)
 if OriginFile != "" {
@@ -33,10 +33,7 @@ if OriginFile != "" {
 	}}
 }
 if flag.A {
-	entry1, _ := os.ReadDir(".")
-	entry2, _ := os.ReadDir(".")
-	entries = append(entries, entry1[0])
-	entries = append(entries, entry2[0])
+	entries = append(entries, FlagA()...)
 }
 var filesAndFolders []File
 
@@ -49,6 +46,7 @@ var filesAndFolders []File
 	} else {
 		file.Name = file.Info.Name()
 	}
+		fmt.Println(file.Name)
 		err := file.PopulateInfo()
 		FilesAndFolders23 = append(FilesAndFolders23, file)
 		if OriginFile != "" {

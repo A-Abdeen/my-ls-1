@@ -9,8 +9,8 @@ import (
 func sortFilesAndFolders(filesAndFolders []File, flags Flags) []File {
 	for i := 0; i < len(filesAndFolders); i++ {
 		for j := i + 1; j < len(filesAndFolders); j++ {
-				x := (filesAndFolders[j].Info.Name())
-				y := (filesAndFolders[i].Info.Name())
+				x := (filesAndFolders[j].Name)
+				y := (filesAndFolders[i].Name)
 				x = strings.ToLower(x)
 				y = strings.ToLower(y)
 				x = Alphanumeric(x)
