@@ -59,6 +59,7 @@ func printFileOrDir(file File, flags Flags) {
 	var spacesNeededSize string
 	var spacesPerm string
 	var spacesNeededOwner string
+	var spacesLinks string
 	if len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))) >= 0{
 	spacesNeededSize = " " + strings.Repeat(" ", len(strconv.Itoa(int(Size.Size)))-len(strconv.Itoa(int(file.Size))))}
 	if len(Size.Group)-len(file.Group)>=0{
@@ -67,6 +68,8 @@ func printFileOrDir(file File, flags Flags) {
 	spacesPerm = strings.Repeat(" ", len(Size.Permissions.String())-len(stringPermissions)) + " "}
 	if len(Size.Owner)-len(file.Owner) >=0{
 	spacesNeededOwner = strings.Repeat(" ", len(Size.Owner)-len(file.Owner))}
+	if len(strconv.Itoa(int(Size.Links)))-len(strconv.Itoa(int(file.Links))) >= 0{
+		spacesLinks = strings.Repeat(" ", len(strconv.Itoa(int(Size.Links)))-len(strconv.Itoa(int(file.Links))))}
 	t := time.Date(2023, time.April, 0, 0, 0, 0, 0, time.UTC)
 	var printtime string
 	if file.ModTime.After(t) {
@@ -75,7 +78,7 @@ func printFileOrDir(file File, flags Flags) {
 		printtime = " " + string(file.ModTime.Format("Jan 02")+"  "+strconv.Itoa(file.ModYear)) + " "
 	}
 	if flags.L {
-		Success = append(Success, stringPermissions+spacesPerm+fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededOwner+spacesNeededGroup+spacesNeededSize+fmt.Sprint(file.Size)+printtime+color+filename+Reset+originFile+"\n")
+		Success = append(Success, stringPermissions+spacesPerm+spacesLinks+ fmt.Sprint(file.Links)+" "+string(file.Owner)+spacesNeededOwner+spacesNeededGroup+spacesNeededSize+fmt.Sprint(file.Size)+printtime+color+filename+Reset+originFile+"\n")
 	} else if flags.F {
 		filename = FFlagFunc(file)
 		Success = append(Success, color+filename+"  "+Reset)
