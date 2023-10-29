@@ -29,11 +29,11 @@ func (f *File) PopulateInfo() error {
 		return err
 	}
 	f.Owner = owner.Username
-	// Group, err := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
-	// if err != nil {
-	// 	return err
-	// }
-	// f.Group = Group.Name
+	Group, _ := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
+	if err != nil {
+		return err
+	}
+	f.Group = Group.Name
 	f.Size = info.Size()
 
 	f.ModTime = info.ModTime()

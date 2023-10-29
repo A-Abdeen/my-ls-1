@@ -46,7 +46,6 @@ var filesAndFolders []File
 	} else {
 		file.Name = file.Info.Name()
 	}
-		fmt.Println(file.Name)
 		err := file.PopulateInfo()
 		FilesAndFolders23 = append(FilesAndFolders23, file)
 		if OriginFile != "" {

@@ -16,12 +16,9 @@ func FlagA() ([]fs.DirEntry) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(patharray[2])
 	newfileDir, err := os.ReadDir("/" + patharray[1] + "/" + patharray[2])
 	for i := 0; i < len(newfileDir); i++ {
 		filename := newfileDir[i].Name()
-		fmt.Println(filename)
-
 		if patharray[3] == filename {
 			filenumber = i
 			break
@@ -33,7 +30,6 @@ func FlagA() ([]fs.DirEntry) {
 	newfileDir2, err2 := os.ReadDir("/" + patharray[1])
 	for i := 0; i < len(newfileDir2); i++ {
 		filename := newfileDir2[i].Name()
-		fmt.Println(filename)
 		if patharray[2] == filename {
 			filenumber2 = i
 			break
