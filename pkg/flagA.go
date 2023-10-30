@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"strings"
 )
 
 func FlagA(dir string) ([]fs.DirEntry) {
@@ -13,19 +12,17 @@ func FlagA(dir string) ([]fs.DirEntry) {
 	var newfileDirFinal []fs.DirEntry
 	path, err := os.Getwd()
 	fmt.Println(path)
-	// if dir != "" && dir != "."{
-	// 	path = path +"/./" + dir
-	// }
-	patharray := strings.Split(path, "/")
-	fmt.Println(patharray)
+	if dir != "" && dir != "."{
+		path = path +"/" + dir
+	}
+	path, filename := MySplit(path, "/")
+	path2, filename2 := MySplit(path, "/")
 	if err != nil {
 		fmt.Println(err)
 	}
-	if len(patharray) >2 {
-	newfileDir, err := os.ReadDir("/" + patharray[(len(patharray)-3)] + "/" + patharray[(len(patharray)-2)])
+	newfileDir, err := os.ReadDir(path)
 	for i := 0; i < len(newfileDir); i++ {
-		filename := newfileDir[i].Name()
-		if patharray[(len(patharray)-1)] == filename {
+		if newfileDir[i].Name() == filename {
 			filenumber = i
 			break
 		}
@@ -33,10 +30,9 @@ func FlagA(dir string) ([]fs.DirEntry) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	newfileDir2, err2 := os.ReadDir("/" + patharray[(len(patharray)-3)])
+	newfileDir2, err2 := os.ReadDir(path2)
 	for i := 0; i < len(newfileDir2); i++ {
-		filename := newfileDir2[i].Name()
-		if patharray[(len(patharray)-2)] == filename {
+		if newfileDir2[i].Name() == filename2 {
 			filenumber2 = i
 			break
 		}
@@ -45,6 +41,6 @@ func FlagA(dir string) ([]fs.DirEntry) {
 		fmt.Println(err2)
 	}
 	newfileDirFinal = append(newfileDirFinal, newfileDir[filenumber])
-	newfileDirFinal = append(newfileDirFinal, newfileDir2[filenumber2])}
+	newfileDirFinal = append(newfileDirFinal, newfileDir2[filenumber2])
 	return newfileDirFinal
 }
