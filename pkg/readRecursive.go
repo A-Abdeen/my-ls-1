@@ -41,8 +41,12 @@ func ReadRecursive(rootDir string, flags Flags) error {
 		printEntries(dir, entries)
 		// Find subdirectories and process them recursively
 		for _, entry := range entries {
+			var subDir string
 			if entry.Info.IsDir() {
-				subDir := dir + "/" + entry.Info.Name()
+				if entry.Name == "." || entry.Name == ".." {
+					continue
+				}
+				subDir = dir + "/" + entry.Info.Name()
 				if err := processDir(subDir); err != nil {
 					return err
 				}

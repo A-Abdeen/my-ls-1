@@ -33,7 +33,7 @@ if OriginFile != "" {
 	}}
 }
 if flag.A {
-	entries = append(entries, FlagA()...)
+	entries = append(entries, FlagA(dir)...)
 }
 var filesAndFolders []File
 

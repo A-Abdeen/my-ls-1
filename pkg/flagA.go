@@ -7,11 +7,15 @@ import (
 	"strings"
 )
 
-func FlagA() ([]fs.DirEntry) {
+func FlagA(dir string) ([]fs.DirEntry) {
 	var filenumber int
 	var filenumber2 int
 	var newfileDirFinal []fs.DirEntry
 	path, err := os.Getwd()
+	fmt.Println(path)
+	// if dir != "" && dir != "."{
+	// 	path = path +"/./" + dir
+	// }
 	patharray := strings.Split(path, "/")
 	fmt.Println(patharray)
 	if err != nil {
@@ -38,7 +42,7 @@ func FlagA() ([]fs.DirEntry) {
 		}
 	}
 	if err2 != nil {
-		fmt.Println(err)
+		fmt.Println(err2)
 	}
 	newfileDirFinal = append(newfileDirFinal, newfileDir[filenumber])
 	newfileDirFinal = append(newfileDirFinal, newfileDir2[filenumber2])}
