@@ -3,6 +3,7 @@ package Myls
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os/user"
 	"syscall"
 )
@@ -35,9 +36,16 @@ func (f *File) PopulateInfo() error {
 	// }
 	// f.Group = Group.Name
 	f.Size = info.Size()
-
 	f.ModTime = info.ModTime()
 	year, _, _ := f.ModTime.Date()
+	sys, ok := info.Sys().(*syscall.Stat_t)
+	if ok != true {
+		log.Fatal(ok)
+	}
+	dev := uint64(sys.Rdev)
+	f.MajorNumb = Major(dev)
+	f.MinorNumb = Minor(dev)
+	fmt.Println(f.MajorNumb)
 	f.ModYear = year
 	FindSize(f)
 	return nil
