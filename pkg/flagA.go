@@ -6,14 +6,14 @@ import (
 	"os"
 )
 
-func FlagA(dir string) ([]fs.DirEntry) {
+func FlagA(dir string) []fs.DirEntry {
 	var filenumber int
 	var filenumber2 int
 	var newfileDirFinal []fs.DirEntry
 	path, err := os.Getwd()
 	fmt.Println(path)
-	if dir != "" && dir != "."{
-		path = path +"/" + dir
+	if dir != "" && dir != "." {
+		path = path + "/" + dir
 	}
 	path, filename := MySplit(path, "/")
 	path2, filename2 := MySplit(path, "/")

@@ -7,7 +7,7 @@ func MySplit(word string, toSplit string) (string, string) {
 	before := false
 	count := 0
 	for i := len(wordAsBytes) - 1; i >= 0; i-- {
-		if string(wordAsBytes[i]) == toSplit && count == 0{
+		if string(wordAsBytes[i]) == toSplit && count == 0 {
 			count++
 			before = true
 			continue

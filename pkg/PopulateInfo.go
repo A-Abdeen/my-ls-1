@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
 	"os/user"
 	"syscall"
 )
@@ -30,23 +31,24 @@ func (f *File) PopulateInfo() error {
 		return err
 	}
 	f.Owner = owner.Username
-	// Group, _ := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
-	// if err != nil {
-	// 	return err
-	// }
-	// f.Group = Group.Name
+	Group, _ := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
+	if err != nil {
+		return err
+	}
+	f.Group = Group.Name
 	f.Size = info.Size()
 	f.ModTime = info.ModTime()
 	year, _, _ := f.ModTime.Date()
 	sys, ok := info.Sys().(*syscall.Stat_t)
-	if ok != true {
+	if !ok {
 		log.Fatal(ok)
 	}
 	dev := uint64(sys.Rdev)
-	f.MajorNumb = Major(dev)
-	f.MinorNumb = Minor(dev)
-	fmt.Println(f.MajorNumb)
+	if info.Mode()&os.ModeDevice != 0 {
+		f.MajorNumb = Major(dev)
+		f.MinorNumb = Minor(dev)
+	}
 	f.ModYear = year
 	FindSize(f)
 	return nil
-	}
+}

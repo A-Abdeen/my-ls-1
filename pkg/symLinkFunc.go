@@ -11,10 +11,10 @@ func symLinkFunc(file File, flags Flags) string {
 	if err != nil {
 		originFile, err = os.Readlink("/usr/bin/" + file.Info.Name())
 		originFile = Green + originFile + Reset
-	if err != nil {
-		originFile, _ = os.Readlink("/dev/" + file.Info.Name())
-		originFile = Yellow + originFile + Reset
-	}
+		if err != nil {
+			originFile, _ = os.Readlink("/dev/" + file.Info.Name())
+			originFile = Yellow + originFile + Reset
+		}
 	}
 	// originFile2 := os.Symlink(file.Info.Name(), "pkg")
 	for i := 1; i < len(os.Args); i++ {

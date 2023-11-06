@@ -1,6 +1,7 @@
 package Myls
 
 import "strings"
+
 func FindSize(file *File) {
 	stringPermissions := file.Permissions.String()
 	stringPermissions = strings.TrimPrefix(stringPermissions, "D")
@@ -18,5 +19,11 @@ func FindSize(file *File) {
 	}
 	if file.Size > Size.Size {
 		Size.Size = file.Size
+	}
+	if file.MajorNumb > Size.MajorNumb {
+		Size.MajorNumb = file.MajorNumb
+	}
+	if file.MinorNumb > Size.MinorNumb {
+		Size.MinorNumb = file.MinorNumb
 	}
 }
