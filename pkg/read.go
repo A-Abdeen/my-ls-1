@@ -8,6 +8,7 @@ import (
 
 // Read the directory and returns a slice of File structs
 func Read(dir string, flag Flags) ([]File, error) {
+	FilesAndFolders = nil
 	var err2 error
 	var singlefile string
 	entries, err := os.ReadDir(dir)
@@ -24,7 +25,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 					fmt.Print("myls: cannot access '" + dir + "/': Not a directory\n")
 					return nil, nil
 				}
-			} else if strings.ContainsRune(dir, '.') && FilesAndFolders == nil {
+			} else if strings.ContainsRune(dir, '.'){
 				entries, _ = os.ReadDir(".")
 				singlefile = dir
 			} else {
@@ -33,7 +34,7 @@ func Read(dir string, flag Flags) ([]File, error) {
 			}
 		}
 	}
-	if flag.A {
+	if flag.A && err == nil{
 		entries = append(entries, FlagA(dir)...)
 	}
 	var filesAndFolders []File

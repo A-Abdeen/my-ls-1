@@ -1,11 +1,11 @@
 echo Run both my-ls and the system command ls with no arguments.
-go run . \n
+go run .
 echo Run both my-ls and the system command ls with the arguments: "<file name>".
-go run . main.go \n
+go run . main.go
 echo Run both my-ls and the system command ls with the arguments: "<directory name>".
-go run . pkg \n
+go run . pkg
 echo Run both my-ls and the system command ls with the flag: "-l".
-go run . -l \n
+go run . -l
 echo Run both my-ls and the system command ls with the arguments: "-l <directory name>".
 go run . -l pkg
 echo Run both my-ls and the system command ls with the flag: "-R", in a directory with folders in it.

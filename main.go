@@ -4,7 +4,7 @@ import (
 	Myls "Myls/pkg"
 	"fmt"
 	"strings"
-)
+	"os")
 
 func main() {
 	flags, args, err := Myls.Parse()
@@ -16,15 +16,11 @@ func main() {
 			Myls.ReadRecursive(".", flags)
 		}
 	} else { // checks wether the totally not smart user has entered a directory or a file along with run command(took me 2 hours to figure this out, but 5 minutes to fix it)
-		for _, arg := range args {
+		for argposition, arg := range args {
 			if !flags.R {
 				Myls.NonRecursive(arg, flags)
-				continue
-			}
-			Myls.ReadRecursive(arg, flags)
-		}
-	}
-	// Myls.Success = Myls.TrimEmptyStrings(Myls.Success)
+			} else{
+			Myls.ReadRecursive(arg, flags)}
 	for _, fail := range Myls.Fail {
 		fmt.Print("myls: cannot access '" + fail + "': No such file or directory\n")
 
@@ -52,5 +48,16 @@ func main() {
 		if !flags.L && len(Myls.Success) != 0 {
 			fmt.Println()
 		}
+	}	
+	Myls.Success = nil
+	Myls.TotalBlocks = 0
+	if argposition != len(args)-1{
+	fmt.Println()
+	_, checkifdir := os.ReadDir(args[argposition+1])
+	if checkifdir == nil{
+		fmt.Print(args[argposition+1] +":" + "\n")
+	}
+	}
+	}
 	}
 }

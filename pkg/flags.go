@@ -38,5 +38,7 @@ func Parse() (Flags, []string, bool) {
 			nonFlagArgs = append(nonFlagArgs, arg) // Store non-flag arguments
 		}
 	}
+	if len(nonFlagArgs) > 1{
+	nonFlagArgs = SortNonFlags(nonFlagArgs)}
 	return flags, nonFlagArgs, false
 }

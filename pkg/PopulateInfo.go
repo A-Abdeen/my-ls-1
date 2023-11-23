@@ -31,11 +31,10 @@ func (f *File) PopulateInfo() error {
 		return err
 	}
 	f.Owner = owner.Username
-	// Group, _ := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
-	// if err != nil {
-	// 	return err
-	// }
-	// f.Group = Group.Name
+	Group, err := user.LookupGroupId(fmt.Sprintf("%d", stat.Gid))
+	if err == nil {
+		f.Group = Group.Name
+	}
 	f.Size = info.Size()
 	f.ModTime = info.ModTime()
 	year, _, _ := f.ModTime.Date()

@@ -11,7 +11,6 @@ func FlagA(dir string) []fs.DirEntry {
 	var filenumber2 int
 	var newfileDirFinal []fs.DirEntry
 	path, err := os.Getwd()
-	fmt.Println(path)
 	if dir != "" && dir != "." {
 		path = path + "/" + dir
 	}
