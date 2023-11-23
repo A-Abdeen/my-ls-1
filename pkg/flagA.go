@@ -39,7 +39,9 @@ func FlagA(dir string) []fs.DirEntry {
 	if err2 != nil {
 		fmt.Println(err2)
 	}
-	newfileDirFinal = append(newfileDirFinal, newfileDir[filenumber])
-	newfileDirFinal = append(newfileDirFinal, newfileDir2[filenumber2])
+	if len(newfileDir) > 0{
+	newfileDirFinal = append(newfileDirFinal, newfileDir[filenumber])} 
+	if len(newfileDir2) > 0{
+	newfileDirFinal = append(newfileDirFinal, newfileDir2[filenumber2])}
 	return newfileDirFinal
 }

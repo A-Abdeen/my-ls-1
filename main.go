@@ -23,12 +23,9 @@ func main() {
 			Myls.ReadRecursive(arg, flags)}
 	for _, fail := range Myls.Fail {
 		fmt.Print("myls: cannot access '" + fail + "': No such file or directory\n")
-
-		if flags.L && !flags.R && len(Myls.Success) > 1 {
-			fmt.Println("total ", Myls.TotalBlocks/2)
-		}
+		Myls.Fail = nil
 	}
-	if flags.L && !flags.R && len(Myls.Success) > 1 {
+	if flags.L && !flags.R && len(Myls.Success) > 1{
 		fmt.Println("total ", Myls.TotalBlocks/2)
 	}
 	if !err {
@@ -52,12 +49,22 @@ func main() {
 	Myls.Success = nil
 	Myls.TotalBlocks = 0
 	if argposition != len(args)-1{
-	fmt.Println()
 	_, checkifdir := os.ReadDir(args[argposition+1])
-	if checkifdir == nil{
+	_, checklink := os.Readlink(args[argposition+1])
+	if checkifdir == nil && checklink != nil && !flags.R{
+		fmt.Println()
 		fmt.Print(args[argposition+1] +":" + "\n")
 	}
 	}
 	}
+	}
+	if Myls.Success != nil && args == nil {
+		if flags.L && !flags.R && len(Myls.Success) > 1 {
+			fmt.Println("total ", Myls.TotalBlocks/2)
+		}
+		for i := 0; i < len(Myls.Success); i++ {
+		fmt.Print(Myls.Success[i])
+		}
+		fmt.Println()
 	}
 }
