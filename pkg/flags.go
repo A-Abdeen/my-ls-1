@@ -32,13 +32,19 @@ func Parse() (Flags, []string, bool) {
 					flags.T = true
 				case 'F':
 					flags.F = true
+
+				default:
+					os.Stderr.WriteString("myls: invalid option -- '" + string(flag) + "'\n")
+					os.Exit(1)
 				}
 			}
+
 		} else {
 			nonFlagArgs = append(nonFlagArgs, arg) // Store non-flag arguments
 		}
 	}
-	if len(nonFlagArgs) > 1{
-	nonFlagArgs = SortNonFlags(nonFlagArgs)}
+	if len(nonFlagArgs) > 1 {
+		nonFlagArgs = SortNonFlags(nonFlagArgs)
+	}
 	return flags, nonFlagArgs, false
 }
